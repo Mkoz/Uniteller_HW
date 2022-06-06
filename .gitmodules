@@ -1,3 +1,9 @@
 [submodule "gtest"]
 	path = gtest
 	url = https://github.com/google/googletest
+[submodule "test/gtest"]
+	path = test/gtest
+	url = https://github.com/google/googletest
+[submodule "tests/gtest"]
+	path = tests/gtest
+	url = https://github.com/google/googletest
