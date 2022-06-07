@@ -19,7 +19,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 # Unit Tests
 ################################
 # Add test cpp file
-add_executable( UnitTests test.cpp ${UnitTests_SOURCE_DIR}/../Indx_impl/Indx.cpp ${UnitTests_SOURCE_DIR}/../Indx_impl/El.cpp)
+add_executable( UnitTests test.cpp ${UnitTests_SOURCE_DIR}/../Indx_impl/Indx.cpp ${UnitTests_SOURCE_DIR}/../Indx_impl/El.cpp El_Test.cpp Indx_Test.cpp)
 # Link test executable against gtest & gtest_main
 target_link_libraries(UnitTests gtest gtest_main)
 add_test( UnitTests ./UnitTests)

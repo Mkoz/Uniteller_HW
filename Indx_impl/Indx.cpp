@@ -17,7 +17,7 @@ void Indx::plus_one()
         __indx.emplace_back(El());
     } else
     {
-        if (__indx.back().get() == El::__max_elem)
+        if (__indx.back().get() == El::_max_elem)
         {
             if (__indx.size() >= Indx::max_len)
             {
@@ -27,7 +27,7 @@ void Indx::plus_one()
             }
         } else
         {
-            __indx.back().plus_one();
+            __indx.back()++;
         }
     }
 }

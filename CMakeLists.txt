@@ -18,7 +18,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-
-add_executable(Uniteller_HW main.cpp Indx_impl/Indx.cpp Indx_impl/El.cpp Indx_impl/El.h tests/test.cpp)
 ADD_SUBDIRECTORY(tests)
+add_executable(Uniteller_HW main.cpp Indx_impl/Indx.cpp Indx_impl/El.cpp Indx_impl/El.h)
+
 
