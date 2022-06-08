@@ -7,7 +7,9 @@ int main() {
 
     std::cout << ((int)El::_end_num-(int)El::_start_num) << std::endl;
 
-    for(auto i = 0; i < ((int)El::_end_num-(int)El::_start_num + 1)*((int)El::_end_letter - (int)El::_start_letter - sizeof(El::except_arr)/sizeof(*El::except_arr) + 1) -1; i++)
+    for(auto i = 0; i < ((int)El::_end_num-(int)El::_start_num + 1)* \
+                        ((int)El::_end_letter - (int)El::_start_letter - \
+                        sizeof(El::_except_arr)/sizeof(*El::_except_arr) + 1) -1; i++)
     {
         el.plus(1);
         std::cout << el.get() << " ";
@@ -19,7 +21,7 @@ int main() {
     auto ind = Indx();
     std::cout << ind.get().size() << std::endl;
 
-    ind.plus_one();
+    ind.plus(1);
     std::cout << ind.get().size() << std::endl;
 
 

@@ -9,7 +9,7 @@ void Indx::set(const char* aStr)
 
 }
 
-void Indx::plus_one()
+void Indx::plus(const int& aPlus)
 {
     if(__indx.empty())
     {
@@ -19,9 +19,9 @@ void Indx::plus_one()
     {
         if (__indx.back().get() == El::_max_elem)
         {
-            if (__indx.size() >= Indx::max_len)
+            if (__indx.size() >= Indx::_max_len)
             {
-                throw std::out_of_range("Max size [" + std::to_string(Indx::max_len) + "] has been reached");
+                throw std::out_of_range("Max size [" + std::to_string(Indx::_max_len) + "] has been reached");
             } else {
                 __indx.emplace_back(El());
             }

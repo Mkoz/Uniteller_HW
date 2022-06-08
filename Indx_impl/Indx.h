@@ -25,10 +25,10 @@ public:
     Indx();
 
     //operator+(Indx&,const int&);
-    void plus_one();
+    void plus(const int&);
     void set(const char*);
     inline const std::list<El>& get() { return this->__indx;};
-    static constexpr short max_len=10;
+    static constexpr short _max_len=10;
 
     private:
         std::list<El> __indx;

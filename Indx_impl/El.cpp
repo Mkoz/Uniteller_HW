@@ -48,10 +48,10 @@ void El::minus(const int& aVal)
         throw std::out_of_range("Min size [" + std::string(El::_min_elem) + "] has been reached");
     }
     auto tmp = _num - aVal;
-    auto counter = tmp/El::_max_num_len;
+    auto counter = aVal/El::_max_num_len;
     if(tmp < static_cast<int>(El::_start_num) - static_cast<int>('0'))
     {
-        _num = tmp%El::_max_num_len;
+        _num = std::abs(tmp%El::_max_num_len);
         if (_num == 0)
         {
             _num+=El::_max_num_len;
@@ -60,7 +60,9 @@ void El::minus(const int& aVal)
             do {
                 _liter -= 1;
                 if(static_cast<int>(_liter) < static_cast<int>(El::_start_letter))
+                {
                     throw std::out_of_range("Min size [" + std::string(El::_min_elem) + "] has been reached");
+                }
             } while (isException(_liter));
             --counter;
         }
@@ -79,7 +81,7 @@ El& El::operator-- (int)
 
 bool El::isException(char& aVal)
 {
-    for(auto i: El::except_arr)
+    for(auto i: El::_except_arr)
     {
         if(*i == aVal)
         {

@@ -26,7 +26,7 @@ public:
     static constexpr char _end_num = '9';
     static constexpr char _max_elem[] = {_end_letter,_end_num};
     static constexpr char _min_elem[] = {_start_letter,_start_num};
-    static constexpr char* except_arr[] = {"D", "F", "G", "J", "M", "Q", "V"};
+    static constexpr char* _except_arr[] = {"D", "F", "G", "J", "M", "Q", "V"};
     static constexpr short _max_num_len = static_cast<int>(_end_num) - static_cast<int>(_start_num) + 1;
 
 private:
