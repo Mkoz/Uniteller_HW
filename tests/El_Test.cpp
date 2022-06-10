@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "../Indx_impl/El.h"
 
-static auto test_letter_sec_size = static_cast<int>(El::_end_letter) - static_cast<int>(El::_start_letter) - sizeof(El::_except_arr)/sizeof(decltype(*El::_except_arr)) + 1;
+static auto test_letter_sec_size = static_cast<int>(El::_end_liter) - static_cast<int>(El::_start_liter) - sizeof(El::_except_arr) / sizeof(decltype(*El::_except_arr)) + 1;
 static auto test_num_sec_size = static_cast<int>(El::_end_num) - static_cast<int>(El::_start_num) + 1;
 static auto test_common_sec_size = test_letter_sec_size * test_num_sec_size;
 static const char* example[] = {"A2" ,"A3" ,"A4" ,"A5" ,"A6" ,"A7" ,"A8" ,"A9" \
@@ -25,96 +25,96 @@ static const char* example[] = {"A2" ,"A3" ,"A4" ,"A5" ,"A6" ,"A7" ,"A8" ,"A9" \
                             ,"Z1" ,"Z2" ,"Z3" ,"Z4" ,"Z5" ,"Z6" ,"Z7" ,"Z8" ,"Z9" };
 
 
-TEST (DefaultConstructor, ConsisntecyCheck)
+TEST (El_DefaultConstructor, ConsisntecyCheck)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string(&El::_start_letter) + std::string(&El::_start_num));
+    EXPECT_EQ(anImpl.get(), std::string(&El::_start_liter) + std::string(&El::_start_num));
 }
 
-TEST (Increment, simpleIncrement)
+TEST (El_Increment, simpleIncrement)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+    EXPECT_EQ(anImpl.get(), std::string("A1"));
 
     for(auto i=0; i < test_common_sec_size - 1; i++ )
     {
         anImpl++;
-        EXPECT_EQ(std::string(anImpl.get()), std::string(example[i]));
+        EXPECT_EQ(anImpl.get(), std::string(example[i]));
     }
 }
 
-TEST (Increment, overFlow)
+TEST (El_Increment, overFlow)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+    EXPECT_EQ(anImpl.get(), std::string("A1"));
     anImpl.set(El::_max_elem);
-    EXPECT_EQ(std::string(anImpl.get()), std::string(El::_max_elem));
+    EXPECT_EQ(anImpl.get(), std::string(El::_max_elem));
 
     EXPECT_ANY_THROW(anImpl++);
 }
 
-TEST (Sum, simpleSum)
+TEST (El_Sum, simpleSum)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+    EXPECT_EQ(anImpl.get(), std::string("A1"));
 
     anImpl.plus(7);
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A8"));
+    EXPECT_EQ(anImpl.get(), std::string("A8"));
 
     anImpl.plus(7);
-    EXPECT_EQ(std::string(anImpl.get()), std::string("B6"));
+    EXPECT_EQ(anImpl.get(), std::string("B6"));
 
     anImpl++;
-    EXPECT_EQ(std::string(anImpl.get()), std::string("B7"));
+    EXPECT_EQ(anImpl.get(), std::string("B7"));
 
     anImpl.plus(100);
-    EXPECT_EQ(std::string(anImpl.get()), std::string("S8"));
+    EXPECT_EQ(anImpl.get(), std::string("S8"));
 }
 
-TEST (Sum, overflow)
+TEST (El_Sum, overflow)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+    EXPECT_EQ(anImpl.get(), std::string("A1"));
 
     EXPECT_ANY_THROW(anImpl.plus(test_common_sec_size+1));
 
 }
 
-TEST (Minus, simpleMinus)
+TEST (El_Minus, simpleMinus)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+    EXPECT_EQ(anImpl.get(), std::string("A1"));
 
     anImpl.plus(100);
-    EXPECT_EQ(std::string(anImpl.get()), std::string("R2"));
+    EXPECT_EQ(anImpl.get(), std::string("R2"));
 
     anImpl--;
-    EXPECT_EQ(std::string(anImpl.get()), std::string("R1"));
+    EXPECT_EQ(anImpl.get(), std::string("R1"));
 
     anImpl.minus(50);
-    EXPECT_EQ(std::string(anImpl.get()), std::string("K4"));
+    EXPECT_EQ(anImpl.get(), std::string("K4"));
 }
 
-TEST (Minus, simpleDecriment)
+TEST (El_Minus, simpleDecriment)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+    EXPECT_EQ(anImpl.get(), std::string("A1"));
 
     anImpl.set(El::_max_elem);
-    EXPECT_EQ(std::string(anImpl.get()), std::string(El::_max_elem));
+    EXPECT_EQ(anImpl.get(), std::string(El::_max_elem));
 
     for(int i = test_common_sec_size - 2; i >= 0; --i)
     {
-        EXPECT_EQ(std::string(anImpl.get()), example[i]);
+        EXPECT_EQ(anImpl.get(), example[i]);
         anImpl--;
     }
-    EXPECT_EQ(std::string(anImpl.get()), std::string(El::_min_elem));
+    EXPECT_EQ(anImpl.get(), std::string(El::_min_elem));
 }
 
-TEST (Minus, overflow)
+TEST (El_Minus, overflow)
 {
     auto anImpl = El();
-    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+    EXPECT_EQ(anImpl.get(), std::string("A1"));
 
     EXPECT_ANY_THROW(anImpl.minus(1));
 

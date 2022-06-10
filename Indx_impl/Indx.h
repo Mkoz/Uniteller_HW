@@ -15,9 +15,7 @@
 
 */
 
-
-
-
+//std::mutex theMut;
 
 class Indx {
 
@@ -26,12 +24,16 @@ public:
 
     //operator+(Indx&,const int&);
     void plus(const int&);
+    void minus(const int&);
     void set(const char*);
-    inline const std::list<El>& get() { return this->__indx;};
-    static constexpr short _max_len=10;
+    inline const std::list<El>& get() const { return this->__indx;};
+    std::string toString() const;
 
-    private:
-        std::list<El> __indx;
+    static constexpr short getMaxLen() { return _max_len;};
+
+private:
+    std::list<El> __indx;
+    static constexpr short _max_len=10;
 
     //static constexpr char str_arr5[][max_len]
     /*

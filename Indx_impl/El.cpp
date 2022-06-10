@@ -8,7 +8,7 @@ El::El()
 
 void El::plus(const int& aVal)
 {
-    if( strcmp(this->get(), El::_max_elem) == 0 )
+    if( strcmp(this->get().c_str(), El::_max_elem) == 0 )
     {
         throw std::out_of_range("Max size [" + std::string(El::_max_elem) + "] has been reached");
     }
@@ -24,7 +24,7 @@ void El::plus(const int& aVal)
         while(counter) {
             do {
                 _liter += 1;
-                if(static_cast<int>(_liter) > static_cast<int>(El::_end_letter))
+                if(static_cast<int>(_liter) > static_cast<int>(El::_end_liter))
                     throw std::out_of_range("Max size [" + std::string(El::_max_elem) + "] has been reached");
             } while (isException(_liter));
             --counter;
@@ -43,7 +43,7 @@ El& El::operator++ (int)
 
 void El::minus(const int& aVal)
 {
-    if( strcmp(this->get(), El::_min_elem) == 0 )
+    if( strcmp(this->get().c_str(), El::_min_elem) == 0 )
     {
         throw std::out_of_range("Min size [" + std::string(El::_min_elem) + "] has been reached");
     }
@@ -60,7 +60,7 @@ void El::minus(const int& aVal)
         while(counter) {
             do {
                 _liter -= 1;
-                if(static_cast<int>(_liter) < static_cast<int>(El::_start_letter))
+                if(static_cast<int>(_liter) < static_cast<int>(El::_start_liter))
                 {
                     throw std::out_of_range("Min size [" + std::string(El::_min_elem) + "] has been reached");
                 }
@@ -92,9 +92,9 @@ bool El::isException(char& aVal)
     return false;
 }
 
-const char* El::get()
+std::string El::get() const
 {
-    return std::string(_liter + std::to_string(_num)).c_str();
+    return std::string(_liter + std::to_string(_num));
 }
 
 void El::set(const char* aStr)
