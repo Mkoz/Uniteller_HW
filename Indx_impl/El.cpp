@@ -48,7 +48,8 @@ void El::minus(const int& aVal)
         throw std::out_of_range("Min size [" + std::string(El::_min_elem) + "] has been reached");
     }
     auto tmp = _num - aVal;
-    auto counter = aVal/El::_max_num_len;
+    auto counter = tmp == 0 ? 1 : aVal/El::_max_num_len;
+
     if(tmp < static_cast<int>(El::_start_num) - static_cast<int>('0'))
     {
         _num = std::abs(tmp%El::_max_num_len);

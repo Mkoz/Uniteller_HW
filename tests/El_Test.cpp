@@ -71,7 +71,7 @@ TEST (Sum, simpleSum)
     EXPECT_EQ(std::string(anImpl.get()), std::string("S8"));
 }
 
-TEST (Sum, overFlow)
+TEST (Sum, overflow)
 {
     auto anImpl = El();
     EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
@@ -95,7 +95,7 @@ TEST (Minus, simpleMinus)
     EXPECT_EQ(std::string(anImpl.get()), std::string("K4"));
 }
 
-TEST (Minus, decriment)
+TEST (Minus, simpleDecriment)
 {
     auto anImpl = El();
     EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
@@ -103,9 +103,19 @@ TEST (Minus, decriment)
     anImpl.set(El::_max_elem);
     EXPECT_EQ(std::string(anImpl.get()), std::string(El::_max_elem));
 
-    for(auto i = test_common_sec_size - 1; i >= 0; --i)
+    for(int i = test_common_sec_size - 2; i >= 0; --i)
     {
+        EXPECT_EQ(std::string(anImpl.get()), example[i]);
         anImpl--;
-        std::cout << anImpl.get() << std::endl;
     }
+    EXPECT_EQ(std::string(anImpl.get()), std::string(El::_min_elem));
+}
+
+TEST (Minus, overflow)
+{
+    auto anImpl = El();
+    EXPECT_EQ(std::string(anImpl.get()), std::string("A1"));
+
+    EXPECT_ANY_THROW(anImpl.minus(1));
+
 }
