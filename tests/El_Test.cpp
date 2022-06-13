@@ -80,7 +80,7 @@ TEST (El_Sum, overflow)
 
 }
 
-TEST (El_Minus, simpleMinus)
+TEST (El_Sub, simpleMinus)
 {
     auto anImpl = El();
     EXPECT_EQ(anImpl.get(), std::string("A1"));
@@ -95,7 +95,7 @@ TEST (El_Minus, simpleMinus)
     EXPECT_EQ(anImpl.get(), std::string("K4"));
 }
 
-TEST (El_Minus, simpleDecriment)
+TEST (El_Sub, simpleDecriment)
 {
     auto anImpl = El();
     EXPECT_EQ(anImpl.get(), std::string("A1"));
@@ -111,7 +111,7 @@ TEST (El_Minus, simpleDecriment)
     EXPECT_EQ(anImpl.get(), std::string(El::_min_elem));
 }
 
-TEST (El_Minus, overflow)
+TEST (El_Sub, overflow)
 {
     auto anImpl = El();
     EXPECT_EQ(anImpl.get(), std::string("A1"));

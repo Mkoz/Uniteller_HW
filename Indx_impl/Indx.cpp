@@ -1,7 +1,9 @@
+#include <sstream>
 #include "Indx.h"
 Indx::Indx()
 {
     __indx=std::list<El>();
+    //Construct first element El::_start_liter + El::_start_num
     __indx.emplace_back(El());
 }
 
@@ -12,8 +14,6 @@ void Indx::plus(const int& aPlus)
         __indx.emplace_back(El());
     } else
     {
-        std::cout << __PRETTY_FUNCTION__ << " :El::_max_elem: " << El::_max_elem << std::endl;
-        std::cout << __PRETTY_FUNCTION__ << " :__indx.back().get(): " << __indx.back().get() << std::endl;
         for( auto i = aPlus; i > 0; --i)
         {
             // Add new entries
@@ -61,27 +61,68 @@ void Indx::minus(const int& aValue)
 
 }
 
-void Indx::set(const char* aStr)
+void Indx::set(const std::string& s)
 {
-    auto s = std::string(aStr);
 
-    std::string::size_type prev_pos = 0, pos = 0;
-    auto tmpEl = El();
-    __indx.clear();
-    while((pos = s.find('-', pos)) != std::string::npos)
+    // TODO make checks more strict
+    std::string aStr = Indx::getSeparator() \
+            + std::string("?([") \
+            + El::_start_liter \
+            + '-' \
+            + El::_end_liter \
+            + ']' + '[' \
+            + El::_start_num \
+            + '-' \
+            + El::_end_num \
+            + ']' + ')'
+            +Indx::getSeparator() \
+            + '?';
+
+    std::regex re(aStr);
+
+    std::smatch match;
+    short i = 1;
+    if(regex_search(s, match, re))
     {
-        std::string substring( s.substr(prev_pos, pos - prev_pos) );
-
-
-        tmpEl.set(substring.c_str());
-        __indx.push_back(tmpEl);
-
-        prev_pos = ++pos;
+        if (match.position() != 0)
+            throw std::runtime_error("Bad set string " + s);
+        __indx.clear();
+        auto str = match.suffix().str();
+        auto tmpEl = El(); // TODO create appropriate constructor to El
+        tmpEl.set(match[1].str().c_str());
+        __indx.emplace_back(tmpEl);
+        while(regex_search(str, match ,re))
+        {
+            if (match.position() != 0)
+                throw std::runtime_error("Bad set string " + s);
+            str = match.suffix().str();
+            tmpEl.set(match[1].str().c_str());
+            __indx.emplace_back(tmpEl);
+        }
+        if (match.suffix().str().size() != 0)
+        {
+            throw std::runtime_error("Bad set string " + s);
+        }
     }
-    tmpEl.set(s.substr(prev_pos, pos-prev_pos).c_str()); // Last word
-    __indx.push_back(tmpEl);
-
+    else
+    {
+        throw std::runtime_error("Bad set string " + s);
+    }
 }
+
+Indx& Indx::operator-- (int)
+{
+    this->minus(1);
+    return *this;
+}
+
+Indx& Indx::operator++ (int)
+{
+    this->plus(1);
+    return *this;
+}
+
+
 
 
 

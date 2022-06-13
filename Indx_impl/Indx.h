@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <stdexcept>
 #include <iostream>
 #include <cstring>
 #include <mutex>
 #include <list>
+#include <regex>
 #include "El.h"
 
 /*
@@ -22,37 +24,35 @@ class Indx {
 public:
     Indx();
 
-    //operator+(Indx&,const int&);
+    void set(const std::string&);
     void plus(const int&);
     void minus(const int&);
-    void set(const char*);
     inline const std::list<El>& get() const { return this->__indx;};
     std::string toString() const;
+    Indx& operator--(int);
+    Indx& operator++(int);
 
     static constexpr short getMaxLen() { return _max_len;};
+    static constexpr char getSeparator() { return _separator;};
 
 private:
     std::list<El> __indx;
+    // Working with built in ASCII character set has a size 128
     static constexpr short _max_len=10;
+    static constexpr char _separator = '-';
 
-    //static constexpr char str_arr5[][max_len]
-    /*
-    static constexpr std::vector<std::string> storage= [](){
-        for(short i = 0; i < Indx.max_len ; i++ )
+
+public:
+    static std::string const getMaxElem()
+    {
+        std::string res;
+        for(auto i = 0; i < Indx::getMaxLen(); i++)
         {
-            Indx.storage.push();
+            if ( i != 0 )
+                res += Indx::getSeparator();
+            res += El::_max_elem;
         }
-    };*/
-/*private:
-
-
-    static constexpr short num_of_letter = int(__end_letter) - int(__start_letter) - sizeof(Indx::except_arr)/sizeof(decltype(&except_arr));
-    static constexpr short num_of_number = int(__end_num) - int(__start_num);
-    static constexpr char* list_of_entries[fact()] = [](std::initializer_list<const char*>)
-            {
-                return std::initializer_list<const char*>();
-            };
-*/
-
+        return res;
+    };
 };
 
