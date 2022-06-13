@@ -23,6 +23,7 @@ class Indx {
 
 public:
     Indx();
+    ~Indx();
 
     void set(const std::string&);
     void plus(const int&);
@@ -40,7 +41,8 @@ private:
     // Working with built in ASCII character set has a size 128
     static constexpr short _max_len=10;
     static constexpr char _separator = '-';
-
+    // Store pointer to heap-allocated mutex instead of stack copy to save copy semantic for the class
+    std::mutex* _theMutex;
 
 public:
     static std::string const getMaxElem()

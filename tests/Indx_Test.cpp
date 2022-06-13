@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "../Indx_impl/Indx.h"
 
+#include <thread>
+
 static auto test_letter_sec_size = static_cast<int>(El::_end_liter) - static_cast<int>(El::_start_liter) - sizeof(El::_except_arr) / sizeof(decltype(*El::_except_arr)) + 1;
 static auto test_num_sec_size = static_cast<int>(El::_end_num) - static_cast<int>(El::_start_num) + 1;
 static auto test_common_sec_size = test_letter_sec_size * test_num_sec_size;
@@ -83,7 +85,6 @@ TEST (Indx_Sub, decrement)
         anImpl--;
     }
     EXPECT_EQ(anImpl.toString(), std::string(El::_min_elem));
-    std::cout << __PRETTY_FUNCTION__ << " : " << anImpl.toString() << std::endl;
 }
 
 TEST (Indx_Sub, minSizeException)
@@ -118,7 +119,6 @@ TEST (Indx_Set, badSetExcaption)
 
     for (auto ex : example_arr)
     {
-        std::cout << ex <<std::endl;
         EXPECT_ANY_THROW(anImpl.set(ex));
     }
 }
@@ -155,4 +155,54 @@ TEST (Indx_GetMaxElem, getMaxElem)
         example += El::_max_elem;
     }
     EXPECT_EQ(Indx::getMaxElem(), example);
+}
+
+TEST (Indx_Threads, simpleThreadsIncrement)
+{
+    auto anImpl = Indx();
+    constructCheck(anImpl);
+
+    for( auto i = Indx::getMaxLen()*test_common_sec_size - 1; i>0; --i)
+    {
+        std::thread t1([&] { anImpl++; });
+        t1.detach();
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds (100));
+
+    EXPECT_EQ(anImpl.toString(), std::string(Indx::getMaxElem()));
+}
+
+TEST (Indx_Threads, simpleThreadsDecrement)
+{
+    auto anImpl = Indx();
+    constructCheck(anImpl);
+
+    anImpl.set(Indx::getMaxElem());
+    EXPECT_EQ(anImpl.toString(), std::string(Indx::getMaxElem()));
+
+    for( auto i = Indx::getMaxLen()*test_common_sec_size - 1; i>0; --i)
+    {
+        std::thread t1([&] { anImpl--; });
+        t1.detach();
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds (100));
+
+    EXPECT_EQ(anImpl.toString(), std::string(El::_min_elem));
+}
+
+TEST (Indx_Threads, simpleThreadsSet)
+{
+    auto anImplThr = Indx();
+    constructCheck(anImplThr);
+
+    for( auto i = 10000; i>0; --i)
+    {
+        std::thread t1([&]
+        {
+            anImplThr.set(Indx::getMaxElem());
+            EXPECT_EQ(anImplThr.toString(), std::string(Indx::getMaxElem()));
+        });
+        t1.detach();
+    }
+    std::this_thread::sleep_for(std::chrono::seconds (1));
 }

@@ -108,6 +108,7 @@ TEST (El_Sub, simpleDecriment)
         EXPECT_EQ(anImpl.get(), example[i]);
         anImpl--;
     }
+
     EXPECT_EQ(anImpl.get(), std::string(El::_min_elem));
 }
 

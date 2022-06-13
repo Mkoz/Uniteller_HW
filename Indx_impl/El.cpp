@@ -1,7 +1,6 @@
 #include "El.h"
 El::El()
 {
-    //std::cout << __PRETTY_FUNCTION__ << std::endl;
     _num=1;
     _liter='A';
 }
@@ -101,7 +100,7 @@ void El::set(const char* aStr)
 {
     if( std::strlen(aStr) != 2 )
     {
-        throw std::length_error( "Too big inialize str" );
+        throw std::length_error( "Incorrect initialize str size");
     }
     _num=int(aStr[1]) - int('0');
     _liter=aStr[0];
